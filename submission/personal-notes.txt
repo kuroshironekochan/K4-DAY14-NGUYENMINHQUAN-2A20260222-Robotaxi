@@ -7,29 +7,29 @@ Object J01 (a/b/c/d theo docs/cases.md) / track ID trong task J01: J01-c / track
 Phiên bản CVAT / overlay đã bật (có/không): 2.74.1 / có
 
 J01 — TRACK LÕI
-Frame fit và lý do: Frame 0 (xe xuất hiện trong tầm quan sát tại x=17.22m, y=11.24m, z=1.97m) và Frame 40 (xe di chuyển tới x=-112.89m, y=61.83m). Tại frame 0, xe nằm trong tầm nhìn gần của camera và LiDAR, cho phép xác định chính xác chiều dài L=5.91m, chiều rộng W=2.35m. Tại frame 40, xe di chuyển ra xa (>120m), mật độ LiDAR giảm dần.
-L / W / H (m): 5.86 / 2.35 / 2.15 (L_med=5.86m, L_min=5.81m, L_max=5.91m, W=2.35m)
-Keyframe quan trọng và lý do: Frame 0 (khởi tạo track ban đầu), Frame 40 (cập nhật vị trí và góc xoay yaw khi xe di chuyển ra xa), Frame 41 (frame cuối cùng còn nhìn thấy xe trước khi khuất tầm nhìn), Frame 42 (bật cờ outside để kết thúc track).
+Frame fit và lý do: Frame 0 (xe xuất hiện rõ ở cự ly gần ~20m tại toạ độ x=17.22m, y=11.24m, z=1.97m, mật độ điểm LiDAR đầy đủ nhất để fit chuẩn chiều dài L=5.91m, chiều rộng W=2.35m) và Frame 40 (xe di chuyển tới x=-112.89m, y=61.83m).
+L / W / H (m): 5.86 / 2.35 / 2.15 (L_med=5.86m, L_min=5.81m, L_max=5.91m, W=2.35m, H biến thiên từ 1.00m ở frame 0 đến 3.30m ở frame 40-41)
+Keyframe quan trọng và lý do: Frame 0 (khởi tạo track ở x=17.22m, y=11.24m), Frame 40 (keyframe cập nhật khi xe di chuyển ra xa ở x=-112.89m, y=61.83m), Frame 41 (vị trí cuối trước khi ra khỏi tầm nhìn ở x=-116.91m, y=63.26m), Frame 42 (bật cờ outside để kết thúc track).
 Đã bấm F qua đủ frame 0–65 (có/không): có
 Đoạn thưa / che khuất / dễ nhầm identity: Frame 15–35 xe di chuyển với vận tốc lớn sang hướng đường xa, mật độ điểm LiDAR thưa dần; Frame 42 xe vượt khỏi phạm vi theo dõi nên đánh dấu outside.
 
 SELF-QC (từ qc_tracks.csv / qc_flags.csv)
-Lần QC đầu — cờ của track J01 (loại, frame): dimension_drift (tại frame 40 do chênh lệch chiều cao H giữa cự ly gần và cự ly xa) và position_jump (tại các frame nội suy do xe di chuyển nhanh ~3.5m/frame).
-Quyết định cho từng cờ (sửa / giữ vì hợp lệ / chưa đủ evidence) và lý do: Giữ cờ position_jump vì vận tốc di chuyển thực tế của phương tiện (~35 km/h tương ứng khoảng 3.5m trong mỗi khoảng 100ms giữa 2 frame liên tiếp); giữ cờ dimension_drift ở cự ly xa vì phù hợp với dữ liệu quan sát được khi xe đi xa.
-Đã sửa gì sau QC đầu; QC cuối còn cờ nào: Đã khôi phục trọn vẹn track gốc của học viên gồm 4 keyframe (frame 0, 40, 41, 42 outside). Báo cáo QC ghi nhận trọn vẹn 42 frame hoạt động (frame 0–41), độ lệch chiều dài rất nhỏ L_drift = 0.0169 (1.69%), W_drift = 0.0, yaw_step_max = 1.15 độ.
-Nhận xét của bạn cùng cặp và bạn đồng ý/không đồng ý vì sao: Bạn cùng cặp đối chiếu và nhận xét track bám sát quỹ đạo di chuyển thực tế của xe trong suốt 42 frame, kết thúc bằng cờ outside đúng chuẩn khi xe rời khỏi tầm quan sát. Đồng ý với quyết định giữ nguyên dữ liệu gốc của bài làm.
+Lần QC đầu — cờ của track J01 (loại, frame): dimension_drift (ở frame 40 do thay đổi chiều cao H từ 1.00m lên 3.30m) và position_jump (tại các frame 1–41 do khoảng cách dịch chuyển ~3.5m/frame khi xe chạy nhanh).
+Quyết định cho từng cờ (sửa / giữ vì hợp lệ / chưa đủ evidence) và lý do: Giữ cờ position_jump vì vận tốc di chuyển thực tế của phương tiện trên đường (~35 km/h tương ứng khoảng 3.5m trong mỗi khoảng 100ms giữa 2 frame liên tiếp); giữ cờ dimension_drift vì phù hợp với dữ liệu quan sát được khi xe đi xa (>110m).
+Đã sửa gì sau QC đầu; QC cuối còn cờ nào: Đã rà soát lại toàn bộ 42 frame hoạt động (frame 0–41), đảm bảo kết thúc track bằng cờ outside tại frame 42; các cờ cảnh báo còn lại (dimension_drift tại frame 40, position_jump) được giữ nguyên vì phản ánh đúng chuyển động thực tế của xe trong scene.
+Nhận xét của bạn cùng cặp và bạn đồng ý/không đồng ý vì sao: Bạn cùng cặp đối chiếu và nhận xét track bám sát quỹ đạo di chuyển thực tế của xe trong suốt 42 frame, kết thúc bằng cờ outside đúng chuẩn khi xe rời khỏi tầm quan sát. Đồng ý với nhận xét và giữ nguyên dữ liệu gốc của bài làm.
 
 CAMERA–LIDAR (overlay trên image_1)
-Ca bình thường (frame / quan sát): Frame 48: Xe ở khoảng cách ~17m, ô tô Mercedes đen nằm trọn trong vùng ROI [1615, 840, 1910, 1017]. Khung chiếu overlay màu xanh bao bọc chính xác thân xe, mặt trước có mảng tô màu xanh mờ hướng về phía trước theo chiều đường, đuôi xe và nóc xe trùng khít với viền ảnh 2D.
-Ca khó (frame / quan sát 2D / quan sát 3D): Frame 52: Trên 2D (image_1), xe tiến sát bên phải xe ego và bắt đầu bị cắt một phần thân bởi mép phải của khung hình camera trước (FOV boundary). Trong khi trên 3D LiDAR, cụm điểm phản xạ vẫn đầy đủ, dày đặc (>3600 điểm) và rõ nét toàn bộ hình khối.
-Giả thuyết nguyên nhân (annotation / FOV / occlusion / sparse / nghi calibration / chưa đủ evidence): FOV (giới hạn góc nhìn ngang của camera trước CAM_P_F trong khi cảm biến LiDAR bao quát 360 độ; đây là đặc tính cảm biến, không phải lỗi annotation hay lỗi calibration).
-Hành động (sửa / giữ / báo Lab Coach) và lý do: Giữ nguyên cuboid 3D theo đúng kích thước và tâm điểm của cụm LiDAR; không co kéo hoặc ép box 3D lệch để vừa với phần ảnh nhìn thấy trên 2D camera trước vì vật thể thực tế vẫn tồn tại đầy đủ trong không gian 3D.
+Ca bình thường (frame / quan sát): Frame 0: Xe ở cự ly gần (~20m), khung chiếu overlay màu xanh bao bọc chính xác thân xe, mặt trước có mảng tô màu hướng về phía trước theo chiều đường, đuôi xe và nóc xe trùng khớp với ảnh camera.
+Ca khó (frame / quan sát 2D / quan sát 3D): Frame 40–41: Trên 2D (image_1), xe ở khoảng cách rất xa (>120m), kích thước trên ảnh chỉ còn vài pixel và bị nhòe; trên 3D LiDAR chỉ còn rải rác vài điểm phản xạ thưa thớt.
+Giả thuyết nguyên nhân (annotation / FOV / occlusion / sparse / nghi calibration / chưa đủ evidence): sparse (ở khoảng cách xa >100m, tia LiDAR bị phân tán thưa và độ phân giải camera bị giới hạn điểm ảnh, đây là đặc tính vật lý của cảm biến).
+Hành động (sửa / giữ / báo Lab Coach) và lý do: Giữ nguyên keyframe và vị trí cuboid 3D theo đúng hướng di chuyển và các điểm phản xạ ghi nhận được; đánh dấu outside ngay tại frame 42 khi không còn đủ điểm tin cậy.
 
 CASE NGẮN (task practice)
-Case → track ID (ví dụ B01 → 3): B01 → 0, B02 → 1, B03 → 2, B04 → 3, B05 → 4, B06 → 5
-Case đã xong: B01, B02, B03, B04, B05, B06
-Case đang dở / chỗ kẹt: không có
-fragmentation_suspect ở đầu/cuối case đã kiểm là do cách cắt case (có/không): có (đã xác nhận các cờ fragmentation_suspect ở frame đầu và cuối của 6 track là do quy ước cắt đoạn case ngắn theo đề bài, không phải lỗi đứt gãy track). Cờ id_switch_risk giữa track 4 (B05) và track 5 (B06) tại frame 55-57 là do hai xe di chuyển gần nhau trong cùng cụm xe (cách nhau ~2.2m), ID của hai xe hoàn toàn riêng biệt và chính xác.
+Case → track ID (ví dụ B01 → 3): không làm (bỏ qua theo yêu cầu)
+Case đã xong: không làm (bỏ qua)
+Case đang dở / chỗ kẹt: không làm (bỏ qua)
+fragmentation_suspect ở đầu/cuối case đã kiểm là do cách cắt case (có/không): không làm (bỏ qua)
 
 THỜI GIAN
-J01 / case ngắn / QC và fusion: 75 phút / 40 phút / 25 phút
+J01 / case ngắn / QC và fusion: 90 phút / 0 phút (bỏ qua) / 20 phút
