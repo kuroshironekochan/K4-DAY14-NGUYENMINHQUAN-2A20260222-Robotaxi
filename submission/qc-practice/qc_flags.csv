@@ -1,16 +1,16 @@
 track_id,frame,error,detail
-0,16,fragmentation_suspect,ID xuat hien giua sequence o 22 m (khong phai frame dau)
-0,21,fragmentation_suspect,ID ket thuc giua sequence o 21 m
-1,28,fragmentation_suspect,ID xuat hien giua sequence o 34 m (khong phai frame dau)
-1,33,fragmentation_suspect,ID ket thuc giua sequence o 27 m
+0,16,fragmentation_suspect,ID xuat hien giua sequence o 26 m (khong phai frame dau)
+0,21,fragmentation_suspect,ID ket thuc giua sequence o 19 m
+1,28,fragmentation_suspect,ID xuat hien giua sequence o 31 m (khong phai frame dau)
+1,33,fragmentation_suspect,ID ket thuc giua sequence o 25 m
 2,36,fragmentation_suspect,ID xuat hien giua sequence o 36 m (khong phai frame dau)
 2,41,fragmentation_suspect,ID ket thuc giua sequence o 30 m
-3,28,fragmentation_suspect,ID xuat hien giua sequence o 10 m (khong phai frame dau)
-3,33,fragmentation_suspect,ID ket thuc giua sequence o 10 m
+3,28,fragmentation_suspect,ID xuat hien giua sequence o 29 m (khong phai frame dau)
+3,33,fragmentation_suspect,ID ket thuc giua sequence o 31 m
 4,52,fragmentation_suspect,ID xuat hien giua sequence o 34 m (khong phai frame dau)
 4,57,fragmentation_suspect,ID ket thuc giua sequence o 27 m
 5,55,fragmentation_suspect,ID xuat hien giua sequence o 29 m (khong phai frame dau)
-5,60,fragmentation_suspect,ID ket thuc giua sequence o 22 m
-4+5,55,id_switch_risk,hai track cach nhau 2.2 m — kiem tra ID truoc/sau doan nay
-4+5,56,id_switch_risk,hai track cach nhau 2.2 m — kiem tra ID truoc/sau doan nay
-4+5,57,id_switch_risk,hai track cach nhau 2.2 m — kiem tra ID truoc/sau doan nay
+5,60,fragmentation_suspect,ID ket thuc giua sequence o 23 m
+4+5,55,id_switch_risk,hai track cach nhau 2.3 m — kiem tra ID truoc/sau doan nay
+4+5,56,id_switch_risk,hai track cach nhau 2.3 m — kiem tra ID truoc/sau doan nay
+4+5,57,id_switch_risk,hai track cach nhau 2.3 m — kiem tra ID truoc/sau doan nay
