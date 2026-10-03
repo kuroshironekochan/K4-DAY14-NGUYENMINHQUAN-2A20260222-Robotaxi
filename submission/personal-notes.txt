@@ -2,34 +2,34 @@ PHIẾU CÁ NHÂN — DAY 14
 Điền file này, chạy QC vào submission/qc-j01 và submission/qc-practice, commit rồi nộp link repo.
 Không dán ảnh, toạ độ điểm hay nội dung file export vào đây.
 
-Họ tên / mã học viên:
-Object J01 (a/b/c/d theo docs/cases.md) / track ID trong task J01:
-Phiên bản CVAT / overlay đã bật (có/không):
+Họ tên / mã học viên: Nguyễn Minh Quân / 2A20260222
+Object J01 (a/b/c/d theo docs/cases.md) / track ID trong task J01: J01-c / track 0
+Phiên bản CVAT / overlay đã bật (có/không): 2.74.1 / có
 
 J01 — TRACK LÕI
-Frame fit và lý do:
-L / W / H (m):
-Keyframe quan trọng và lý do:
-Đã bấm F qua đủ frame 0–65 (có/không):
-Đoạn thưa / che khuất / dễ nhầm identity:
+Frame fit và lý do: Frame 48 và Frame 55. Tại frame 48 (frame neo), xe Mercedes-Benz màu đen nằm trong vùng ROI [1615, 840, 1910, 1017] của camera trước CAM_P_F, đối chiếu overlay khớp chính xác từng mép thân và nóc xe. Tại frame 55, xe ở cự ly gần (~8m) với mật độ điểm phản xạ LiDAR dày đặc nhất (~4800 điểm), thể hiện rõ footprint, ranh giới 4 bánh chạm mặt đường và nóc xe trên cả 3 view Top, Side, Front.
+L / W / H (m): 4.70 / 1.95 / 1.65
+Keyframe quan trọng và lý do: Frame 0 (khởi tạo track từ xa ở x=86.09m theo hướng di chuyển), Frame 35 (bắt đầu lộ diện khỏi xe sedan trắng phía trước, nhận điểm LiDAR phản xạ rõ đầu tiên), Frame 48 (frame neo chuẩn đối chiếu với ảnh camera trước CAM_P_F), Frame 55 (xe tiếp cận gần nhất, điểm LiDAR dày đặc nhất để fit kích thước chuẩn), Frame 65 (điểm cuối sequence, xe ở phía sau xe ego trong LiDAR 360 độ).
+Đã bấm F qua đủ frame 0–65 (có/không): có
+Đoạn thưa / che khuất / dễ nhầm identity: Frame 0–34 xe ở xa (>40m) và bị che khuất một phần bởi xe sedan trắng đỗ phía trước, cần giữ nguyên kích thước vật rắn; Frame 52–65 xe dần vượt ra ngoài biên phải FOV của camera trước CAM_P_F nhưng vẫn tồn tại đầy đủ và rõ ràng trên LiDAR 360 độ.
 
 SELF-QC (từ qc_tracks.csv / qc_flags.csv)
-Lần QC đầu — cờ của track J01 (loại, frame):
-Quyết định cho từng cờ (sửa / giữ vì hợp lệ / chưa đủ evidence) và lý do:
-Đã sửa gì sau QC đầu; QC cuối còn cờ nào:
-Nhận xét của bạn cùng cặp và bạn đồng ý/không đồng ý vì sao:
+Lần QC đầu — cờ của track J01 (loại, frame): dimension_drift ở lần fit thử nghiệm ban đầu và fragmentation_suspect khi chưa kéo dài trọn vẹn 66 frame.
+Quyết định cho từng cờ (sửa / giữ vì hợp lệ / chưa đủ evidence) và lý do: Sửa dimension_drift bằng cách khóa cố định kích thước chuẩn L=4.70m, W=1.95m, H=1.65m tại tất cả các keyframe; sửa fragmentation_suspect bằng cách mở rộng track bao quát toàn bộ 66 frame (0-65).
+Đã sửa gì sau QC đầu; QC cuối còn cờ nào: Đã đồng bộ kích thước chuẩn L/W/H trên toàn bộ các keyframe, làm mượt quỹ đạo tâm và yaw. Bản QC cuối (submission/qc-j01): 0 cờ cảnh báo (khong co co canh bao nao), L_drift = 0.0, W_drift = 0.0, H_drift = 0.0, yaw_step_max_deg = 0.0, pos_step_max_m = 1.48m.
+Nhận xét của bạn cùng cặp và bạn đồng ý/không đồng ý vì sao: Bạn cùng cặp đối chiếu đoạn frame 45–55 và nhận xét cuboid ôm rất sát cụm điểm LiDAR, đường bao overlay khớp chuẩn với chiếc SUV Mercedes màu đen trên ảnh camera trước; đồng ý với quyết định giữ nguyên kích thước vật rắn ở đoạn đầu khi xe bị che khuất.
 
 CAMERA–LIDAR (overlay trên image_1)
-Ca bình thường (frame / quan sát):
-Ca khó (frame / quan sát 2D / quan sát 3D):
-Giả thuyết nguyên nhân (annotation / FOV / occlusion / sparse / nghi calibration / chưa đủ evidence):
-Hành động (sửa / giữ / báo Lab Coach) và lý do:
+Ca bình thường (frame / quan sát): Frame 48: Xe ở khoảng cách ~17m, ô tô Mercedes đen nằm trọn trong vùng ROI [1615, 840, 1910, 1017]. Khung chiếu overlay màu xanh bao bọc chính xác thân xe, mặt trước có mảng tô màu xanh mờ hướng về phía trước theo chiều đường, đuôi xe và nóc xe trùng khít với viền ảnh 2D.
+Ca khó (frame / quan sát 2D / quan sát 3D): Frame 52: Trên 2D (image_1), xe tiến sát bên phải xe ego và bắt đầu bị cắt một phần thân bởi mép phải của khung hình camera trước (FOV boundary). Trong khi trên 3D LiDAR, cụm điểm phản xạ vẫn đầy đủ, dày đặc (>3600 điểm) và rõ nét toàn bộ hình khối.
+Giả thuyết nguyên nhân (annotation / FOV / occlusion / sparse / nghi calibration / chưa đủ evidence): FOV (giới hạn góc nhìn ngang của camera trước CAM_P_F trong khi cảm biến LiDAR bao quát 360 độ; đây là đặc tính cảm biến, không phải lỗi annotation hay lỗi calibration).
+Hành động (sửa / giữ / báo Lab Coach) và lý do: Giữ nguyên cuboid 3D theo đúng kích thước và tâm điểm của cụm LiDAR; không co kéo hoặc ép box 3D lệch để vừa với phần ảnh nhìn thấy trên 2D camera trước vì vật thể thực tế vẫn tồn tại đầy đủ trong không gian 3D.
 
 CASE NGẮN (task practice)
-Case → track ID (ví dụ B01 → 3):
-Case đã xong:
-Case đang dở / chỗ kẹt:
-fragmentation_suspect ở đầu/cuối case đã kiểm là do cách cắt case (có/không):
+Case → track ID (ví dụ B01 → 3): B01 → 0, B02 → 1, B03 → 2, B04 → 3, B05 → 4, B06 → 5
+Case đã xong: B01, B02, B03, B04, B05, B06
+Case đang dở / chỗ kẹt: không có
+fragmentation_suspect ở đầu/cuối case đã kiểm là do cách cắt case (có/không): có (đã xác nhận các cờ fragmentation_suspect ở frame đầu và cuối của 6 track là do quy ước cắt đoạn case ngắn theo đề bài, không phải lỗi đứt gãy track). Cờ id_switch_risk giữa track 4 (B05) và track 5 (B06) tại frame 55-57 là do hai xe di chuyển gần nhau trong cùng cụm xe (cách nhau ~2.2m), ID của hai xe hoàn toàn riêng biệt và chính xác.
 
 THỜI GIAN
-J01 / case ngắn / QC và fusion:
+J01 / case ngắn / QC và fusion: 75 phút / 40 phút / 25 phút
